@@ -18,17 +18,17 @@ This application let's users search local shoe stores for specific brands and br
 
 ## Specifications ##
 
-* Get and set a name of a store.
-    * input: "Solestruck"
-    * output: "Solestruck"
+* Get and set a name and description of a store.
+    * input: "Solestruck", "shoe store with pun name"
+    * output: "Solestruck", "shoe store with pun name"
 
 * Confirm that the store id is set as a numeric parameter when assigned an integer.
     * input: "1"
     * output: value equals and integer
 
 * Add, save, and get a store within the database.
-    * input: "Solestruck", "1"
-    * output: "Solestruck", "1"
+    * input: "Solestruck", "shoe store with pun name", "1"
+    * output: "Solestruck", "shoe store with pun name", "1"
 
 * Completely delete stores within the database.
     * input: delete all
