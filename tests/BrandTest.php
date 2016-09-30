@@ -63,5 +63,21 @@
 
             $this->assertEquals($test_brand, $result[0]);
         }
+
+        function test_getAll()
+        {
+            $name = "KEEN";
+            $description = "HybridLife is the KEEN mantra";
+            $test_brand = new Brand($name, $description);
+            $name2 = "Danner";
+            $description2 = "stylish bootwear";
+            $test_brand2 = new Brand($name2, $description2);
+            $test_brand->save();
+            $test_brand2->save();
+
+            $result = Brand::getAll();
+
+            $this->assertEquals([$test_brand, $test_brand2], $result);
+        }
     }
 ?>
