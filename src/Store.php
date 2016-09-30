@@ -44,13 +44,13 @@
             $GLOBALS['DB']->exec("DELETE FROM stores WHERE id = {$this->getId()};");
         }
 
-        function updateName($new_name)
+        function updateName($name)
         {
             $GLOBALS['DB']->exec("UPDATE stores SET name ='{$name}' WHERE id ='{$this->getId()}';");
             $this->setName($name);
         }
 
-        function updateDescription($new_description)
+        function updateDescription($description)
         {
             $GLOBALS['DB']->exec("UPDATE stores SET description ='{$description}' WHERE id ='{$this->getId()}';");
             $this->setDescription($description);

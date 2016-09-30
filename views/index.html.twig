@@ -91,19 +91,19 @@
                 <div class="col-sm-9 well">
                     {% if store is empty and brand is empty %}
                             <h3 class='text-center'>Select a store or brand from the list</h3>
-                        {% else %}
-                            <h2>{{ store.getName }}</h2>
-                            <p>
-                                Description: {{ store.getDescription }}
-                            </p>
-                            {% if storeBrands is not empty %}
-                                <p>Brands carried:</p>
-                                <ul>
-                                    {% for brand in storeBrands %}
-                                        <li>{{ brand.getName }}</li>
-                                    {% endfor %}
-                                </ul>
-                            {% endif %}
+                    {% elseif store is not empty and brand is empty %}
+                        <h2>{{ store.getName }}</h2>
+                        <p>
+                            Description: {{ store.getDescription }}
+                        </p>
+                        {% if storeBrands is not empty %}
+                            <p>Brands carried:</p>
+                            <ul>
+                                {% for brand in storeBrands %}
+                                    <li>{{ brand.getName }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
                         <hr>
                         <div class='row'>
                             <div class='col-sm-4'>
@@ -127,7 +127,7 @@
                                     <input type='hidden' name='_method' value='patch'>
                                     <div class='form-group'>
                                         <label>Name:</label>
-                                        <input type='text' name='title' class='form-control' value='{{ store.getName() }}'>
+                                        <input type='text' name='name' class='form-control' value='{{ store.getName() }}'>
                                     </div>
                                     <button type='submit' class='btn btn-info'><span class='glyphicon glyphicon-pencil'></span> Edit</button>
                                 </form>
@@ -146,6 +146,66 @@
                                 <form class='deleteButton' action='/stores/{{ store.getId }}' method='post'>
                                     <input type='hidden' name='_method' value='delete'>
                                     <button class='btn btn-danger pull-right' type='submit'><span class='glyphicon glyphicon-trash'></span> Delete Store</button>
+                                </form>
+                            </div>
+
+                        </div>
+
+                    {% else %}
+                        <h2>{{ brand.getName }}</h2>
+                        <p>
+                            Description: {{ brand.getDescription }}
+                        </p>
+                        {% if brandStores is not empty %}
+                            <p>Brands carried:</p>
+                            <ul>
+                                {% for store in brandStores %}
+                                    <li>{{ store.getName }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                        <hr>
+                        <div class='row'>
+                            <div class='col-sm-4'>
+                                <h3>Add a Store</h3>
+                                <form class='editForm' action='/brands/add/{{ brand.getId }}' method='post'>
+                                    <div class='form-group'>
+                                        <label>Name:</label>
+                                        <select class='form-control' name='brand_id'>
+                                            {% for store in stores %}
+                                                <option value='{{ store.getId }}'>{{ store.getName }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <button type='submit' class='btn btn-info'><span class='glyphicon glyphicon-user'></span> Add</button>
+                                </form>
+
+                            </div>
+                            <div class='col-sm-4'>
+                                <h3>Edit Name</h3>
+                                <form class='editForm' action='/brands/{{ brand.getId }}' method='post'>
+                                    <input type='hidden' name='_method' value='patch'>
+                                    <div class='form-group'>
+                                        <label>Name:</label>
+                                        <input type='text' name='name' class='form-control' value='{{ brand.getName() }}'>
+                                    </div>
+                                    <button type='submit' class='btn btn-info'><span class='glyphicon glyphicon-pencil'></span> Edit</button>
+                                </form>
+                            </div>
+                            <div class='col-sm-4'>
+                                <h3>Update description:</h3>
+                                <form action="/brands/{{ brand.getId }}" method="post">
+                                    <input type='hidden' name='_method' value='patch'>
+                                    <div class='form-group'>
+                                        <label>New description:</label>
+                                        <input type='text' name='description' class='form-control'>
+                                    </div>
+                                    <button class='btn btn-info' type='submit'><span class='glyphicon glyphicon-pencil'></span> Edit</button>
+                                </form>
+                                <br>
+                                <form class='deleteButton' action='/brands/{{ brand.getId }}' method='post'>
+                                    <input type='hidden' name='_method' value='delete'>
+                                    <button class='btn btn-danger pull-right' type='submit'><span class='glyphicon glyphicon-trash'></span> Delete Brand</button>
                                 </form>
                             </div>
 
