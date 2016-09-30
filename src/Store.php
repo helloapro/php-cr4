@@ -46,7 +46,14 @@
 
         function updateName($new_name)
         {
-            
+            $GLOBALS['DB']->exec("UPDATE stores SET name ='{$name}' WHERE id ='{$this->getId()}';");
+            $this->setName($name);
+        }
+
+        function updateDescription($new_description)
+        {
+            $GLOBALS['DB']->exec("UPDATE stores SET description ='{$description}' WHERE id ='{$this->getId()}';");
+            $this->setDescription($description);
         }
 
         function addBrand($brand_id)
