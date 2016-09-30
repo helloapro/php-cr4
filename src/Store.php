@@ -32,5 +32,29 @@
         {
             return $this->id;
         }
+//methods
+        function save()
+        {
+            $GLOBALS['DB']->exec("INSERT INTO stores (name, description) VALUES ('{$this->getName()}', '{$this->getDescription()}');");
+            $this->id = $GLOBALS['DB']->lastInsertId();
+        }
+//static methods
+        static function getAll()
+        {
+            $returned_stores = $GLOBALS['DB']->query("SELECT * FROM stores;");
+            $stores = array();
+            foreach ($returned_stores as $store) {
+                $name = $store['name'];
+                $description = $store['description'];
+                $id = $store['id'];
+                $new_store = new Store($name, $description, $id);
+                array_push($stores, $new_store);
+            }
+            return $stores;
+        }
+        static function deleteAll()
+        {
+            $GLOBALS['DB']->exec("DELETE FROM stores;");
+        }
     }
 ?>

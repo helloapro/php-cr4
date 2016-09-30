@@ -5,7 +5,7 @@
         private $description;
         private $id;
 
-        function __construct($name, $description, $id = null)
+        function __construct($name, $description = '', $id = null)
         {
             $this->name = $name;
             $this->description = $description;
@@ -32,4 +32,30 @@
         {
             return $this->id;
         }
+//methods
+        function save()
+        {
+            $GLOBALS['DB']->exec("INSERT INTO brands (name, description) VALUES ('{$this->getName()}', '{$this->getDescription()}');");
+            $this->id = $GLOBALS['DB']->lastInsertId();
+        }
+//static methods
+        static function getAll()
+        {
+            $returned_brands = $GLOBALS['DB']->query("SELECT * FROM brands");
+            $brands= array();
+            foreach ($returned_brands as $brand) {
+               $id = $brand['id'];
+               $name = $brand['name'];
+               $description = $brand['description'];
+               $new_brand = new Brand($name, $description, $id);
+               array_push($brands, $new_brand);
+            }
+            return $brands;
+        }
+
+        static function deleteAll()
+        {
+            $GLOBALS['DB']->exec("DELETE FROM brands;");
+        }
+
     }

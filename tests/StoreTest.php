@@ -13,6 +13,11 @@
 
     class StoreTest extends PHPUnit_Framework_TestCase
     {
+        protected function teardown()
+        {
+            Store::deleteAll();
+        }
+
         function test_getName()
         {
             $name = "Solestruck";
@@ -46,6 +51,16 @@
           $this->assertEquals(true, is_numeric($result));
         }
 
+        function test_save()
+        {
+            $name = "Solestruck";
+            $description = "store with a pun name";
+            $test_store = new Store($name, $description);
 
+            $test_store->save();
+            $result = Store::getAll();
+
+            $this->assertEquals($test_store, $result[0]);
+        }
     }
 ?>
