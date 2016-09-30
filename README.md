@@ -34,6 +34,14 @@ This application let's users search local shoe stores for specific brands and br
     * input: delete all
     * output: ""
 
+* Find a Store by its id.
+    * input: "1"
+    * output: "Solestruck"
+
+* Add and get brands associated with a store.
+    * input: "1" (Solestruck's id)
+    * output: "KEEN"
+
 * Get a name of a shoe brand and confirm its id is set as a numeric parameter when assigned an integer.
     * input: "Keen", "1"
     * output: "Keen", value equals an integer
@@ -46,6 +54,13 @@ This application let's users search local shoe stores for specific brands and br
     * input: delete all
     * output: ""
 
+* Find a Brand by its id.
+    * input: "1"
+    * output: "KEEN"
+
+* Add and get stores associated with a store.
+    * input: "1" (KEEN's id)
+    * output: "Solestruck"
 
 
 ## Known Bugs ##
