@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <div class="container">
+            <br>
+            <div class="jumbotron text-center">
+                <h1>Portland's Local Shoe Directory!</h1>
+                <div class="row">
+                    <div class="col-sm-6 well">
+                        <form action='/add_store' method='post'>
+                            <h3>Add a Store</h3>
+                            <div class='form-group'>
+                                <label>Name:</label>
+                                <input type='text' name='name' class='form-control'>
+                            </div>
+                            <div class='form-group'>
+                                <label>Description:</label>
+                                <input type='text' name='description' class='form-control'>
+                            </div>
+                            <button type='submit' class='btn btn-info'><span class='glyphicon glyphicon-plus'></span> Add</button>
+                        </form>
+                    </div>
+                    <div class="col-sm-6 well">
+                        <form action='/add_brand' method='post'>
+                            <h3>Add a Brand</h3>
+                            <div class='form-group'>
+                                <label>Name:</label>
+                                <input type='text' name='name' class='form-control'>
+                            </div>
+                            <div class='form-group'>
+                                <label>Description:</label>
+                                <input type='text' name='description' class='form-control'>
+                            </div>
+                            <button type='submit' class='btn btn-info'><span class='glyphicon glyphicon-plus'></span> Add</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="text-center">
+                <a class="btn btn-lg btn-primary btn-info" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                Browse Shoe Stores
+                  </a>
+                <button class="btn btn-lg btn-info" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                Browse Shoe Brands
+                </button>
+            </div>
+            <br>
+            <div class="collapse" id="collapseExample">
+                <div class="card card-block">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-sm-3">
+                    <div id="accordion" role="tablist" aria-multiselectable="true">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingOne">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        Browse Shoe Stores
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                {% if stores is not empty %}
+                                    <ul>
+                                    {% for store in stores %}
+                                        <li><a href = "/store/{{ store.getId }}"> {{ store.getName }} </a></li>
+                                    {% endfor %}
+                                    </ul>
+                                    {% else %}
+                                    No stores added to this list yet!
+                                {% endif %}
+                            </div>
+                        </div><!--close first panel-->
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingTwo">
+                                <h4 class="panel-title">
+                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        Browse Shoe Brands
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                {% if brands is not empty %}
+                                    <ul>
+                                    {% for brand in brands %}
+                                        <li><a href = "/brand/{{ brand.getId }}"> {{ brand.getName }} </a></li>
+                                    {% endfor %}
+                                    </ul>
+                                    {% else %}
+                                    No brands added to this list yet!
+                                {% endif %}
+                            </div>
+                        </div><!--close second panel-->
+                    </div>
+                </div> <!--closes col-3-sm displaying lists of shoes and brands-->
+
+                <div class="col-sm-9 well">
+                    
+                </div>
+
+            </div>
+
+
+
+
+        </div> <!--closes container-->
+    </body>
+</html>
