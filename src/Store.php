@@ -38,7 +38,25 @@
             $GLOBALS['DB']->exec("INSERT INTO stores (name, description) VALUES ('{$this->getName()}', '{$this->getDescription()}');");
             $this->id = $GLOBALS['DB']->lastInsertId();
         }
+
+        function delete()
+        {
+            $GLOBALS['DB']->exec("DELETE FROM stores WHERE id = {$this->getId()};");
+        }
+
 //static methods
+        static function find($search_id)
+        {
+            $returned_stores = Store::getAll();
+            $found_store = null;
+            foreach ($returned_stores as $store) {
+                if ($store->getId() == $search_id) {
+                    $found_store = $store;
+                }
+            }
+            return $found_store;
+        }
+
         static function getAll()
         {
             $returned_stores = $GLOBALS['DB']->query("SELECT * FROM stores;");

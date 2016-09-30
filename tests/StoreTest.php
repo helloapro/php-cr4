@@ -78,5 +78,39 @@
 
             $this->assertEquals([$test_store, $test_store2], $result);
         }
+
+        function test_delete()
+        {
+            $name = "Solestruck";
+            $description = "store with a pun name";
+            $test_store = new Store($name, $description);
+            $name2 = "Half Pint";
+            $description2 = "vintage leather shoe shop";
+            $test_store2 = new Store($name2, $description2);
+            $test_store->save();
+            $test_store2->save();
+
+            $test_store->delete();
+            $result = Store::getAll();
+
+            $this->assertEquals([$test_store2], $result);
+        }
+
+        function test_find()
+        {
+            $name = "Solestruck";
+            $description = "store with a pun name";
+            $test_store = new Store($name, $description);
+            $name2 = "Half Pint";
+            $description2 = "vintage leather shoe shop";
+            $test_store2 = new Store($name2, $description2);
+            $test_store->save();
+            $test_store2->save();
+
+            $search_id = $test_store2->getId();
+            $result = Store::find($search_id);
+
+            $this->assertEquals($test_store2, $result);
+        }
     }
 ?>
