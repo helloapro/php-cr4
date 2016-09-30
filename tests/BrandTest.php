@@ -79,5 +79,39 @@
 
             $this->assertEquals([$test_brand, $test_brand2], $result);
         }
+
+        function test_find()
+        {
+            $name = "KEEN";
+            $description = "HybridLife is the KEEN mantra";
+            $test_brand = new Brand($name, $description);
+            $name2 = "Danner";
+            $description2 = "stylish bootwear";
+            $test_brand2 = new Brand($name2, $description2);
+            $test_brand->save();
+            $test_brand2->save();
+
+            $search_id = $test_brand->getId();
+            $result = Brand::find($search_id);
+
+            $this->assertEquals($test_brand, $result);
+        }
+
+        function test_delete()
+        {
+            $name = "KEEN";
+            $description = "HybridLife is the KEEN mantra";
+            $test_brand = new Brand($name, $description);
+            $name2 = "Danner";
+            $description2 = "stylish bootwear";
+            $test_brand2 = new Brand($name2, $description2);
+            $test_brand->save();
+            $test_brand2->save();
+
+            $test_brand->delete();
+            $result = Brand::getAll();
+
+            $this->assertEquals([$test_brand2], $result);
+        }
     }
 ?>
