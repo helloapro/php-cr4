@@ -5,6 +5,7 @@
     */
 
     require_once "src/Brand.php";
+    require_once "src/Store.php";
 
 
     $server = 'mysql:host=localhost;dbname=shoes_test';
@@ -17,6 +18,7 @@
         protected function tearDown()
         {
             Brand::deleteAll();
+            Store::deleteAll();
         }
 
         function test_getName()
@@ -112,6 +114,44 @@
             $result = Brand::getAll();
 
             $this->assertEquals([$test_brand2], $result);
+        }
+
+        function test_addStore()
+        {
+            $name = "KEEN";
+            $description = "HybridLife is the KEEN mantra";
+            $test_brand = new Brand($name, $description);
+            $test_brand->save();
+            $store_name = "Solestruck";
+            $store_description = "store with a pun name";
+            $test_store = new Store($store_name, $store_description);
+            $test_store->save();
+
+            $test_brand->addStore($test_store->getId());
+
+            $this->assertEquals([$test_store], $test_brand->getStores());
+        }
+
+        function test_getStores()
+        {
+            $name = "KEEN";
+            $description = "HybridLife is the KEEN mantra";
+            $test_brand = new Brand($name, $description);
+            $test_brand->save();
+            $store_name = "Solestruck";
+            $store_description = "store with a pun name";
+            $test_store = new Store($store_name, $store_description);
+            $name2 = "Half Pint";
+            $description2 = "vintage leather shoe shop";
+            $test_store2 = new Store($name2, $description2);
+            $test_store->save();
+            $test_store2->save();
+
+            $test_brand->addStore($test_store->getId());
+            $test_brand->addStore($test_store2->getId());
+            $result = $test_brand->getStores();
+
+            $this->assertEquals([$test_store, $test_store2], $result);
         }
     }
 ?>
