@@ -31,7 +31,7 @@
         $new_store->save();
         $stores = Store::getAll();
         $brands = Brand::getAll();
-        return $app['twig']->render('index.html.twig', array('stores' => $stores, 'brands' => $brands, 'store' => $new_store, 'storeBrands' => null));
+        return $app['twig']->render('index.html.twig', array('stores' => $stores, 'brands' => $brands, 'store' => $new_store, 'brand' => null, 'storeBrands' => null, 'brandStores' => null));
     });
 
     $app->get("/stores/{id}", function($id) use ($app) {
@@ -39,7 +39,7 @@
         $stores = Store::getAll();
         $brands = Brand::getAll();
         $store_brands = $found_store->getBrands();
-        return $app['twig']->render('index.html.twig', array('stores' => $stores, 'brands' => $brands, 'store' => $found_store, 'brand' => null, 'storeBrands' => $store_brands));
+        return $app['twig']->render('index.html.twig', array('stores' => $stores, 'brands' => $brands, 'store' => $found_store, 'brand' => null, 'storeBrands' => $store_brands, 'brandStores' => null));
     });
 
     $app->patch("/stores/{id}", function($id) use ($app) {
@@ -57,13 +57,22 @@
         $stores = Store::getAll();
         $brands = Brand::getAll();
         $store_brands = $found_store->getBrands();
-        return $app['twig']->render('index.html.twig', array('stores' => $stores, 'brands' => $brands, 'store' => $found_store, 'brand' => null, 'storeBrands' => $store_brands));
+        return $app['twig']->render('index.html.twig', array('stores' => $stores, 'brands' => $brands, 'store' => $found_store, 'brand' => null, 'storeBrands' => $store_brands, 'brandStores' => null));
     });
 
     $app->delete("/stores/{id}", function($id) use ($app) {
         $found_store = Store::find($id);
         $found_store->delete();
         return $app->redirect('/');
+    });
+
+    $app->post("/stores/add/{id}", function($id) use ($app) {
+        $found_store = Store::find($id);
+        $found_store->addBrand($_POST['brand_id']);
+        $stores = Store::getAll();
+        $brands = Brand::getAll();
+        $store_brands = $found_store->getBrands();
+        return $app['twig']->render('index.html.twig', array('stores' => $stores, 'brands' => $brands, 'store' => $found_store, 'brand' => null, 'storeBrands' => $store_brands, 'brandStores' => null));
     });
 
 
@@ -75,7 +84,7 @@
         $new_brand->save();
         $stores = Store::getAll();
         $brands = Brand::getAll();
-        return $app['twig']->render('index.html.twig', array('stores' => $stores, 'brands' => $brands, 'brand' => $new_brand));
+        return $app['twig']->render('index.html.twig', array('stores' => $stores, 'brands' => $brands, 'store' => null, 'brand' => $new_brand, 'storeBrands' => null, 'brandStores' => null));
     });
 
     $app->get("/brands/{id}", function($id) use ($app) {
