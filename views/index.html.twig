@@ -54,7 +54,7 @@
                                     <ul>
                                     {% for store in stores %}
                                         <li>
-                                            <a href = "/store/{{ store.getId }}"> {{ store.getName }} </a>
+                                            <a href = "/stores/{{ store.getId }}"> {{ store.getName }} </a>
                                         </li>
                                     {% endfor %}
                                     </ul>
@@ -76,8 +76,7 @@
                                     <ul>
                                     {% for brand in brands %}
                                         <li>
-                                            <a href = "/brand/{{ brand.getId }}"> {{ brand.getName }} </a>
-                                            <a href = "/delete_brand/{{ brand.getId }}"><span class='glyphicon glyphicon-trash'></span></a>
+                                            <a href = "/brands/{{ brand.getId }}"> {{ brand.getName }} </a>
                                         </li>
                                     {% endfor %}
                                     </ul>
@@ -90,8 +89,8 @@
                 </div> <!--closes col-3-sm displaying lists of shoes and brands-->
 
                 <div class="col-sm-9 well">
-                    {% if store is empty %}
-                            <h3 class='text-center'>Select a store from the list</h3>
+                    {% if store is empty and brand is empty %}
+                            <h3 class='text-center'>Select a store or brand from the list</h3>
                         {% else %}
                             <h2>{{ store.getName }}</h2>
                             <p>
@@ -143,7 +142,7 @@
                                     </div>
                                     <button class='btn btn-info' type='submit'><span class='glyphicon glyphicon-pencil'></span> Edit</button>
                                 </form>
-
+                                <br>
                                 <form class='deleteButton' action='/stores/{{ store.getId }}' method='post'>
                                     <input type='hidden' name='_method' value='delete'>
                                     <button class='btn btn-danger pull-right' type='submit'><span class='glyphicon glyphicon-trash'></span> Delete Store</button>

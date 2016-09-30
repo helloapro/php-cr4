@@ -34,12 +34,36 @@
         return $app['twig']->render('index.html.twig', array('stores' => $stores, 'brands' => $brands, 'store' => $new_store, 'storeBrands' => null));
     });
 
-    $app->post("/stores/{id}", function($id) use ($app) {
-        $found_store = Store::find();
+    $app->get("/stores/{id}", function($id) use ($app) {
+        $found_store = Store::find($id);
+        $stores = Store::getAll();
+        $brands = Brand::getAll();
+        $store_brands = $found_store->getBrands();
+        return $app['twig']->render('index.html.twig', array('stores' => $stores, 'brands' => $brands, 'store' => $found_store, 'storeBrands' => $store_brands));
+    });
+
+    $app->patch("/stores/{id}", function($id) use ($app) {
+        $found_store = Store::find($id);
+        $edit_store_name = $_POST['name'];
+        $edit_store_description = $_POST['description'];
+        if($edit_store_name !== null)
+        {
+            $found_store->updateName();
+        }
+        if($edit_store_description !== null)
+        {
+            $found_store->updateDescription();
+        }
         $stores = Store::getAll();
         $brands = Brand::getAll();
         $store_brands = $found_store->getBrands();
         return $app['twig']->render('index.html.twig', array('stores' => $stores, 'brands' => $brands, 'store' => $new_store, 'storeBrands' => $store_brands));
+    });
+
+    $app->delete("/stores/{id}", function($id) use ($app) {
+        $found_store = Store::find($id);
+        $found_store->delete();
+        return $app->redirect('/');
     });
 
 
