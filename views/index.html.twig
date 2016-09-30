@@ -7,7 +7,7 @@
                 <h1>Portland's Local Shoe Directory!</h1>
                 <div class="row">
                     <div class="col-sm-6 well">
-                        <form action='/add_store' method='post'>
+                        <form action='/stores' method='post'>
                             <h3>Add a Store</h3>
                             <div class='form-group'>
                                 <label>Name:</label>
@@ -21,7 +21,7 @@
                         </form>
                     </div>
                     <div class="col-sm-6 well">
-                        <form action='/add_brand' method='post'>
+                        <form action='/brands' method='post'>
                             <h3>Add a Brand</h3>
                             <div class='form-group'>
                                 <label>Name:</label>
@@ -38,27 +38,6 @@
 
             </div>
 
-            <div class="text-center">
-                <a class="btn btn-lg btn-primary btn-info" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                Browse Shoe Stores
-                  </a>
-                <button class="btn btn-lg btn-info" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                Browse Shoe Brands
-                </button>
-            </div>
-            <br>
-            <div class="collapse" id="collapseExample">
-                <div class="card card-block">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-
             <div class="row">
                 <div class="col-sm-3">
                     <div id="accordion" role="tablist" aria-multiselectable="true">
@@ -74,7 +53,9 @@
                                 {% if stores is not empty %}
                                     <ul>
                                     {% for store in stores %}
-                                        <li><a href = "/store/{{ store.getId }}"> {{ store.getName }} </a></li>
+                                        <li>
+                                            <a href = "/store/{{ store.getId }}"> {{ store.getName }} </a>
+                                        </li>
                                     {% endfor %}
                                     </ul>
                                     {% else %}
@@ -94,7 +75,10 @@
                                 {% if brands is not empty %}
                                     <ul>
                                     {% for brand in brands %}
-                                        <li><a href = "/brand/{{ brand.getId }}"> {{ brand.getName }} </a></li>
+                                        <li>
+                                            <a href = "/brand/{{ brand.getId }}"> {{ brand.getName }} </a>
+                                            <a href = "/delete_brand/{{ brand.getId }}"><span class='glyphicon glyphicon-trash'></span></a>
+                                        </li>
                                     {% endfor %}
                                     </ul>
                                     {% else %}
@@ -106,7 +90,71 @@
                 </div> <!--closes col-3-sm displaying lists of shoes and brands-->
 
                 <div class="col-sm-9 well">
-                    
+                    {% if store is empty %}
+                            <h3 class='text-center'>Select a store from the list</h3>
+                        {% else %}
+                            <h2>{{ store.getName }}</h2>
+                            <p>
+                                Description: {{ store.getDescription }}
+                            </p>
+                            {% if storeBrands is not empty %}
+                                <p>Brands carried:</p>
+                                <ul>
+                                    {% for brand in storeBrands %}
+                                        <li>{{ brand.getName }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        <hr>
+                        <div class='row'>
+                            <div class='col-sm-4'>
+                                <h3>Add a Brand</h3>
+                                <form class='editForm' action='/stores/add/{{ store.getId }}' method='post'>
+                                    <div class='form-group'>
+                                        <label>Name:</label>
+                                        <select class='form-control' name='brand_id'>
+                                            {% for brand in brands %}
+                                                <option value='{{ brand.getId }}'>{{ brand.getName }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <button type='submit' class='btn btn-info'><span class='glyphicon glyphicon-user'></span> Add</button>
+                                </form>
+
+                            </div>
+                            <div class='col-sm-4'>
+                                <h3>Edit Name</h3>
+                                <form class='editForm' action='/stores/{{ store.getId }}' method='post'>
+                                    <input type='hidden' name='_method' value='patch'>
+                                    <div class='form-group'>
+                                        <label>Name:</label>
+                                        <input type='text' name='title' class='form-control' value='{{ store.getName() }}'>
+                                    </div>
+                                    <button type='submit' class='btn btn-info'><span class='glyphicon glyphicon-pencil'></span> Edit</button>
+                                </form>
+                            </div>
+                            <div class='col-sm-4'>
+                                <h3>Update description:</h3>
+                                <form action="/stores/{{ store.getId }}" method="post">
+                                    <input type='hidden' name='_method' value='patch'>
+                                    <div class='form-group'>
+                                        <label>New description:</label>
+                                        <input type='text' name='description' class='form-control'>
+                                    </div>
+                                    <button class='btn btn-info' type='submit'><span class='glyphicon glyphicon-pencil'></span> Edit</button>
+                                </form>
+
+                                <form class='deleteButton' action='/stores/{{ store.getId }}' method='post'>
+                                    <input type='hidden' name='_method' value='delete'>
+                                    <button class='btn btn-danger pull-right' type='submit'><span class='glyphicon glyphicon-trash'></span> Delete Store</button>
+                                </form>
+                            </div>
+
+                        </div>
+
+
+                    {% endif %}
+
                 </div>
 
             </div>

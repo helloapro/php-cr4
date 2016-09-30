@@ -44,17 +44,9 @@
             $GLOBALS['DB']->exec("DELETE FROM stores WHERE id = {$this->getId()};");
         }
 
-//static methods
-        static function find($search_id)
+        function updateName($new_name)
         {
-            $returned_stores = Store::getAll();
-            $found_store = null;
-            foreach ($returned_stores as $store) {
-                if ($store->getId() == $search_id) {
-                    $found_store = $store;
-                }
-            }
-            return $found_store;
+            
         }
 
         function addBrand($brand_id)
@@ -77,6 +69,19 @@
                 array_push($brands, $found_brand);
             }
             return $brands;
+        }
+
+//static methods
+        static function find($search_id)
+        {
+            $returned_stores = Store::getAll();
+            $found_store = null;
+            foreach ($returned_stores as $store) {
+                if ($store->getId() == $search_id) {
+                    $found_store = $store;
+                }
+            }
+            return $found_store;
         }
 
         static function getAll()
