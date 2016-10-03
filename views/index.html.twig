@@ -126,14 +126,14 @@
                                 <form class='editForm' action='/stores/{{ store.getId }}' method='post'>
                                     <input type='hidden' name='_method' value='patch'>
                                     <div class='form-group'>
-                                        <label>Name:</label>
+                                        <label>New name:</label>
                                         <input type='text' name='name' class='form-control' value='{{ store.getName() }}'>
                                     </div>
                                     <button type='submit' class='btn btn-info'><span class='glyphicon glyphicon-pencil'></span> Edit</button>
                                 </form>
                             </div>
                             <div class='col-sm-4'>
-                                <h3>Update description:</h3>
+                                <h3>Update Description</h3>
                                 <form action="/stores/{{ store.getId }}" method="post">
                                     <input type='hidden' name='_method' value='patch'>
                                     <div class='form-group'>
@@ -157,7 +157,7 @@
                             Description: {{ brand.getDescription }}
                         </p>
                         {% if brandStores is not empty %}
-                            <p>Brands carried:</p>
+                            <p>Local stores that carry this brand:</p>
                             <ul>
                                 {% for store in brandStores %}
                                     <li>{{ store.getName }}</li>
@@ -171,7 +171,7 @@
                                 <form class='editForm' action='/brands/add/{{ brand.getId }}' method='post'>
                                     <div class='form-group'>
                                         <label>Name:</label>
-                                        <select class='form-control' name='brand_id'>
+                                        <select class='form-control' name='store_id'>
                                             {% for store in stores %}
                                                 <option value='{{ store.getId }}'>{{ store.getName }}</option>
                                             {% endfor %}
@@ -186,14 +186,14 @@
                                 <form class='editForm' action='/brands/{{ brand.getId }}' method='post'>
                                     <input type='hidden' name='_method' value='patch'>
                                     <div class='form-group'>
-                                        <label>Name:</label>
+                                        <label>New name:</label>
                                         <input type='text' name='name' class='form-control' value='{{ brand.getName() }}'>
                                     </div>
                                     <button type='submit' class='btn btn-info'><span class='glyphicon glyphicon-pencil'></span> Edit</button>
                                 </form>
                             </div>
                             <div class='col-sm-4'>
-                                <h3>Update description:</h3>
+                                <h3>Update Description</h3>
                                 <form action="/brands/{{ brand.getId }}" method="post">
                                     <input type='hidden' name='_method' value='patch'>
                                     <div class='form-group'>

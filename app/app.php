@@ -76,9 +76,6 @@
     });
 
 
-
-
-
     $app->post("/brands", function() use ($app) {
         $new_brand = new Brand($_POST['name'], $_POST['description']);
         $new_brand->save();
@@ -95,10 +92,37 @@
         return $app['twig']->render('index.html.twig', array('stores' => $stores, 'brands' => $brands, 'store' => null, 'brand' =>$found_brand, 'storeBrands' => null, 'brandStores' => $brand_stores));
     });
 
+    $app->patch("/brands/{id}", function($id) use ($app) {
+        $found_brand = Brand::find($id);
+        $edit_brand_name = array_key_exists('name', $_POST) ? $_POST['name'] : null;
+        $edit_brand_description = array_key_exists('description', $_POST) ? $_POST['description'] : null;
+        if($edit_brand_name !== null)
+        {
+            $found_brand->updateName($edit_brand_name);
+        }
+        if($edit_brand_description !== null)
+        {
+            $found_brand->updateDescription($edit_brand_description);
+        }
+        $stores = Store::getAll();
+        $brands = Brand::getAll();
+        $brand_stores = $found_brand->getStores();
+        return $app['twig']->render('index.html.twig', array('stores' => $stores, 'brands' => $brands, 'store' => null, 'brand' => $found_brand, 'storeBrands' => null, 'brandStores' => $brand_stores));
+    });
+
     $app->delete("/brands/{id}", function($id) use ($app) {
         $found_brand = Brand::find($id);
         $found_brand->delete();
         return $app->redirect('/');
+    });
+
+    $app->post("/brands/add/{id}", function($id) use ($app) {
+        $found_brand = Brand::find($id);
+        $found_brand->addStore($_POST['store_id']);
+        $stores = Store::getAll();
+        $brands = Brand::getAll();
+        $brand_stores = $found_brand->getStores();
+        return $app['twig']->render('index.html.twig', array('stores' => $stores, 'brands' => $brands, 'store' => null, 'brand' => $found_brand, 'storeBrands' => null, 'brandStores' => $brand_stores));
     });
 
     return $app;
